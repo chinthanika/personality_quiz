@@ -11,7 +11,7 @@ function Quiz() {
 
     useEffect(() => {
         setCurrentQuestionId(0);
-        
+
         setSelectedAnswers([]);
     }, [])
 
@@ -24,7 +24,7 @@ function Quiz() {
 
         if (currentQuestionId < QuizBank.length - 1) {
             setCurrentQuestionId(currentQuestionId + 1);
-        } 
+        }
         else {
             calculateResults();
             navigate('/results');
@@ -32,7 +32,7 @@ function Quiz() {
 
     }
 
-    function calculateResults () {
+    function calculateResults() {
 
     }
 
@@ -41,11 +41,24 @@ function Quiz() {
             {QuizBank.length > 0 && currentQuestionId < QuizBank.length && (
                 <div>
                     <p>{QuizBank[currentQuestionId].question}</p>
-                    {QuizBank[currentQuestionId].answers.map((answer, index) => (
-                        <button key={index} onClick={() => handleAnswerClick(answer)}>
-                            {answer}
-                        </button>
-                    ))}
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        {QuizBank[currentQuestionId].answers.map((answer, index) => (
+                            <div key={index} style={{ textAlign: 'center' }}>
+                                <div
+                                    onClick={() => handleAnswerClick(answer.value)}
+                                    style={{
+                                        width: answer.size === 'large' ? '30px' : '15px',
+                                        height: answer.size === 'large' ? '30px' : '15px',
+                                        borderRadius: '50%',
+                                        backgroundColor: '#007bff',
+                                        display: 'inline-block',
+                                        cursor: 'pointer'
+                                    }}
+                                ></div>
+                                {answer.label && <div>{answer.label}</div>}
+                            </div>
+                        ))}
+                    </div>
                 </div>
             )}
         </div>
