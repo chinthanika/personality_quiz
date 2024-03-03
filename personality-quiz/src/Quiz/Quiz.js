@@ -1,65 +1,66 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import QuizBank from '../components/QuizBank';
-
+// import QuizBank from '../components/QuizBank';
 import './Quiz.css';
 
 function Quiz() {
-
     let navigate = useNavigate();
     const [currentQuestionId, setCurrentQuestionId] = useState(0);
-    const [selectedAnswers, setSelectedAnswers] = useState([]);
 
+    // Effect for quiz bank
+    //useEffect(() => {
+    //    setCurrentQuestionId(0);
+    //}, []);
+
+    // Effect for loading external quiz script
     useEffect(() => {
-        setCurrentQuestionId(0);
+        const scriptId = 'os-widget-jssdk';
 
-        setSelectedAnswers([]);
-    }, [])
-
-    function handleAnswerClick(answer) {
-        console.log("Answer selected:", answer);
-
-        const newSelectedAnswers = [...selectedAnswers];
-        newSelectedAnswers[currentQuestionId] = answer;
-        setSelectedAnswers(newSelectedAnswers);
-
-        if (currentQuestionId < QuizBank.length - 1) {
-            setCurrentQuestionId(currentQuestionId + 1);
-        }
-        else {
-            calculateResults();
-            navigate('/results');
+        // Avoid duplicate script addition
+        if (document.getElementById(scriptId)) {
+            return;
         }
 
-    }
+        // Create script element
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.id = scriptId;
+        script.async = true;
+        script.src = 'https://www.opinionstage.com/assets/loader.js?' + Math.floor(new Date().getTime() / 1000000);
+
+        // Insert script in document
+        document.body.appendChild(script);
+
+        // Cleanup function to remove script when component unmounts
+        return () => {
+            const loadedScript = document.getElementById(scriptId);
+            if (loadedScript) {
+                loadedScript.remove();
+            }
+        };
+    }, []);
 
     function calculateResults() {
-
+        // Implementation of result calculation
     }
 
+
     return (
-        <div className="quiz-container">
-            <p>{QuizBank[currentQuestionId].question}</p>
-            {QuizBank.length > 0 && currentQuestionId < QuizBank.length && (
-                <div className="answers-container">
-                    {QuizBank[currentQuestionId].answers.map((answer, index, array) => (
-                        <div key={index} style={{ display: 'flex', alignItems: 'center' }}> {/* Ensure alignment */}
-                            {/* Conditionally render label for the first answer */}
-                            {index === 0 && <div className="circle-label" style={{ marginRight: '10pt' }}>{answer.label}</div>}
-                            <div
-                                className={`circle ${answer.size}`}
-                                onClick={() => handleAnswerClick(answer.value)}
-                            ></div>
-                            {/* Conditionally render label for the last answer */}
-                            {index === array.length - 1 && <div className="circle-label" style={{ marginLeft: '10pt' }}>{answer.label}</div>}
-                        </div>
-                    ))}
-                </div>
-            )
-            }
-        </div >
-    );
+    <div>
+        <p>
+            Fuck You
+        </p>
+    </div>)
+    // return (
+    //     <div className="quiz-container">
+    //         <p>Fuck You</p>
+    //         {console.log("Running")}
+    //         {/* Your existing quiz content here */}
+    //         {/* Placeholder for the external quiz */}
+    //         <div id="os-widget-1216415" className="os_widget" data-path="/phil18/-my-plant-personality" data-of="phil18" data-opinionstage-widget="0b23cc18-55c2-4707-aff1-fb362e285458"></div>
+    //     </div>
+    // );
 };
 
 export default Quiz;
