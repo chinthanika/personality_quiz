@@ -45,22 +45,14 @@ function Quiz() {
         // Implementation of result calculation
     }
 
-
     return (
-    <div>
-        <p>
-            Fuck You
-        </p>
-    </div>)
-    // return (
-    //     <div className="quiz-container">
-    //         <p>Fuck You</p>
-    //         {console.log("Running")}
-    //         {/* Your existing quiz content here */}
-    //         {/* Placeholder for the external quiz */}
-    //         <div id="os-widget-1216415" className="os_widget" data-path="/phil18/-my-plant-personality" data-of="phil18" data-opinionstage-widget="0b23cc18-55c2-4707-aff1-fb362e285458"></div>
-    //     </div>
-    // );
+        <div className="quiz-container">
+            {console.log("Running")}
+            {/* Your existing quiz content here */}
+            {/* Placeholder for the external quiz */}
+            <div id="os-widget-1216415" className="os_widget" data-path="/phil18/-my-plant-personality" data-of="phil18" data-opinionstage-widget="0b23cc18-55c2-4707-aff1-fb362e285458"></div>
+        </div>
+    );
 };
 
 export default Quiz;
