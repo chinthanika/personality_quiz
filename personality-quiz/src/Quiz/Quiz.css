@@ -1,0 +1,52 @@
+.quiz-container {
+    text-align: center;
+    margin-top: 60pt;
+    margin-bottom: 60pt;
+    margin-left: 60pt;
+    margin-right: 60pt;
+  }
+  
+  .answers-container {
+    display: flex;
+    justify-content: center; /* Centers items horizontally */
+    align-items: center; /* Align items vertically in the center, if their heights vary */
+    gap: 10%; /* Adjusts the space between the items */
+    margin: 20pt; /* Adjusts margins around the container */
+  }
+  
+  .circle {
+    width: 20pt;
+    height: 20pt;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out; /* Smooth transition for hover effect */
+  }
+  
+  .circle.large {
+    width: 60pt;
+    height: 60pt;
+    background-color:rgb(66, 129, 66);
+  }
+
+  .circle.small {
+    width: 40pt;
+    height: 40pt;
+    background-color:rgb(66, 129, 66);
+  }
+  
+  .circle.very-small {
+    width: 20pt;
+    height: 20pt;
+    background-color:rgb(66, 129, 66);
+  }
+  
+  .circle:hover {
+    background-color: darkgreen;
+    transform: scale(1.1); /* Slightly enlarge circle on hover */
+  }
+  
+  .circle-label {
+    margin-right: 8pt;
+    margin-left: 8pt;
+    font-size: 14pt
+  }
