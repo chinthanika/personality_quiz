@@ -26,7 +26,7 @@ const PersonalityBank = [
     },
     {
         type: "ISF",
-        plant: "Money Plant",
+        plant: "Snake Plant",
         meaning: "Money plants symbolize prosperity, good fortune, and harmony. They are easy to care for and are thought to bring positive energy into a space, reflecting the ISF's nurturing and harmonious nature. Like ISFs, money plants enhance their surroundings, promoting a sense of peace and well-being."
     },
     {
