@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ReactP5Wrapper } from 'react-p5-wrapper';
+import PlantSketch from '../components/PlantSketch';
 
 import QuizBank from '../components/QuizBank';
 
@@ -79,6 +81,7 @@ function Quiz() {
 
     return (
         <div className="quiz-container">
+            
             <p>{QuizBank[currentQuestionId].question}</p>
             {QuizBank.length > 0 && currentQuestionId < QuizBank.length && (
                 <div className = "answers-container">
@@ -97,6 +100,7 @@ function Quiz() {
                 </div>
             )
             }
+            <ReactP5Wrapper sketch={PlantSketch} />
         </div >
     );
 };

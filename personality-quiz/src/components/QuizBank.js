@@ -93,7 +93,7 @@ const QuizBank = [
         ]
     }, 
     {
-        question: "Would you emphasize more on concrete details than abstract details?",
+        question: "Would you emphasize more on the specifics than the big picture?",
         id: 3,
         attribute: "SN",
         answers: [
@@ -217,7 +217,7 @@ const QuizBank = [
         ]
     },
     {
-        question: "Do you see yourself as objective and fair-minded than compassionate and empathetic?",
+        question: "Do you see yourself as more objective and fair-minded than compassionate and empathetic?",
         id: 7,
         attribute: "TF",
         answers: [
