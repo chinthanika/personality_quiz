@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/personality_quiz/static/css/main.59b6113e.css",
-    "main.js": "/personality_quiz/static/js/main.97761e03.js",
+    "main.css": "/personality_quiz/static/css/main.8a9ffd0c.css",
+    "main.js": "/personality_quiz/static/js/main.cf717b95.js",
     "static/js/453.7e0dd992.chunk.js": "/personality_quiz/static/js/453.7e0dd992.chunk.js",
     "static/media/logo.svg": "/personality_quiz/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/personality_quiz/index.html",
-    "main.59b6113e.css.map": "/personality_quiz/static/css/main.59b6113e.css.map",
-    "main.97761e03.js.map": "/personality_quiz/static/js/main.97761e03.js.map",
+    "main.8a9ffd0c.css.map": "/personality_quiz/static/css/main.8a9ffd0c.css.map",
+    "main.cf717b95.js.map": "/personality_quiz/static/js/main.cf717b95.js.map",
     "453.7e0dd992.chunk.js.map": "/personality_quiz/static/js/453.7e0dd992.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.59b6113e.css",
-    "static/js/main.97761e03.js"
+    "static/css/main.8a9ffd0c.css",
+    "static/js/main.cf717b95.js"
   ]
 }
