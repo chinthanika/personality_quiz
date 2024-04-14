@@ -1,84 +1,122 @@
-export default function ButterflySketch(p) {
-    let butterflies = [];
-  
-    class Butterfly {
-      constructor() {
-        this.x = p.random(p.width);
-        this.y = p.random(p.height);
-        this.wingSpan = p.random(40, 80);
-        this.angle = p.random(p.TWO_PI); // Initial random angle for each butterfly
-        this.flutterRate = 300; // Frames between each flutter
-        this.lastFlutterFrame = 0; // Track the last frame number when the butterfly fluttered
+export default function PlantSketch(p) {
+  let vines = [];
+
+  class Vine {
+      constructor(startX, startFrame) {
+          this.points = [{x: startX, y: p.height}];
+          this.startFrame = startFrame;
+          this.leaves = [];
+          this.finished = false;
       }
-  
-      move() {
-        this.x += p.random(-1, 1); // Horizontal movement
-        this.y += p.random(-1, 1); // Vertical movement
-        // Check if it's time to flutter the wings
-        if (p.frameCount - this.lastFlutterFrame > this.flutterRate) {
-          this.angle += p.PI / 4; // Change the angle for the next flutter
-          this.lastFlutterFrame = p.frameCount; // Update the last flutter frame
+
+      grow() {
+        
+          if (p.frameCount >= this.startFrame && !this.finished) {
+              let lastPoint = this.points[this.points.length - 1];
+              let stepX = p.random(-2, 2);
+              let stepY = -p.random(2, 5);
+
+              this.points.push({x: lastPoint.x + stepX, y: lastPoint.y + stepY});
+
+              if (lastPoint.y + stepY <= 0) {
+                  this.finished = true;
+              }
+          } else if (this.finished && p.frameCount % 60 === 0) {
+            // Add a new leaf with initial opacity of 0 and a random angle
+            let leafPos = this.points[p.int(p.random(this.points.length))];
+            this.leaves.push({
+                x: leafPos.x, 
+                y: leafPos.y, 
+                opacity: 0,
+                angle: p.random(p.TWO_PI) // Initialize with a random angle
+            });
         }
+
+          // Increase opacity of each leaf gradually until fully opaque
+          this.leaves.forEach(leaf => {
+              if (leaf.opacity < 255) {
+                  leaf.opacity += 5;
+              }
+          });
       }
-  
+
       display() {
-        p.stroke(0);
         p.noFill();
-  
-        // Drawing the left wing similar to the leaf
-        this.drawWing(-1); // Negative direction for left wing
-        // Drawing the right wing similar to the leaf
-        this.drawWing(1); // Positive direction for right wing
-      }
-  
-      drawWing(direction) {
-        const wingWidth = this.wingSpan / 2;
-        const wingHeight = this.wingSpan;
-        const angleOffset = p.PI / 8; // Adjust this to change the curve shape of the wings
-  
-        let startPointX = this.x;
-        let startPointY = this.y;
-  
-        let controlPointX = startPointX + (direction * wingWidth * p.cos(this.angle + angleOffset));
-        let controlPointY = startPointY + (wingWidth * p.sin(this.angle + angleOffset));
-  
-        let endPointX = startPointX + (direction * wingWidth * p.cos(this.angle - angleOffset));
-        let endPointY = startPointY + (wingWidth * p.sin(this.angle - angleOffset));
-  
-        // Draw the top part of the wing
+        p.stroke(85, 107, 47); // Dark green color for vine
+        p.strokeWeight(2);
         p.beginShape();
-        p.vertex(startPointX, startPointY);
-        p.quadraticVertex(controlPointX, controlPointY, endPointX, endPointY);
+        this.points.forEach(point => p.curveVertex(point.x, point.y));
         p.endShape();
-  
-        // Adjust control points for the bottom part of the wing for a more leaf-like appearance
-        controlPointX = startPointX + (direction * wingWidth * 0.5 * p.cos(this.angle - angleOffset * 2));
-        controlPointY = startPointY + (wingWidth * 0.5 * p.sin(this.angle - angleOffset * 2));
-  
-        // Draw the bottom part of the wing
-        p.beginShape();
-        p.vertex(startPointX, startPointY);
-        p.quadraticVertex(controlPointX, controlPointY, endPointX, endPointY);
-        p.endShape();
-      }
-  
-      update() {
-        this.move();
-        this.display();
-      }
+    
+        // Current time factor for the oscillation
+        let time = p.millis() * 0.001; // Convert milliseconds to seconds
+    
+        // Draw leaves with their initial random angle adjusted by the wind simulation
+        this.leaves.forEach(leaf => {
+            // Simulate wind by oscillating the angle within a small range
+            const windOscillation = 0.2; // Max angle deviation in radians
+            const windSpeed = 2; // How fast the leaves sway back and forth
+            // Calculate the oscillation
+            let angleOscillation = Math.sin(time * windSpeed) * windOscillation;
+    
+            // Adjusted angle with wind oscillation
+            const angle = leaf.angle + angleOscillation;
+    
+            // Set stroke color and fill color with opacity
+            p.stroke(34, 139, 34, leaf.opacity);
+
+            p.strokeWeight(1);
+    
+            // Define the leaf size
+            const leafWidth = 10;
+            const leafHeight = 20;
+    
+            // Use push and pop to isolate transformations for each leaf
+            p.push();
+            p.translate(leaf.x, leaf.y);
+            p.rotate(angle); // Apply the leaf's orientation
+    
+            // Drawing the leaf
+            // Central vein of the leaf
+            p.line(0, 0, 0, leafHeight);
+    
+            // Left curved line of the leaf
+            p.beginShape();
+            p.vertex(0, 0);
+            p.quadraticVertex(leafWidth / 2, leafHeight / 2, 0, leafHeight);
+            p.endShape();
+    
+            // Right curved line of the leaf
+            p.beginShape();
+            p.vertex(0, 0);
+            p.quadraticVertex(-leafWidth / 2, leafHeight / 2, 0, leafHeight);
+            p.endShape();
+    
+            p.pop(); // Restore previous drawing style settings and transformations
+        });
     }
-  
-    p.setup = () => {
-      p.createCanvas(p.windowWidth, p.windowHeight);
-      for (let i = 0; i < 10; i++) {
-        butterflies.push(new Butterfly());
-      }
-    };
-  
-    p.draw = () => {
-      p.background(255);
-      butterflies.forEach((butterfly) => {
-        butterfly.update();
-      });
-    };
   }
+
+  p.setup = () => {
+      p.createCanvas(p.windowWidth, p.windowHeight);
+      for (let i = 0; i < p.width; i += 20) {
+          vines.push(new Vine(i, p.int(p.random(0, 300))));
+      }
+  };
+
+  p.draw = () => {
+      p.clear();
+      vines.forEach(vine => {
+          vine.grow();
+          vine.display();
+      });
+  };
+
+  p.windowResized = () => {
+      p.resizeCanvas(p.windowWidth, p.windowHeight);
+      vines = [];
+      for (let i = 0; i < p.width; i += 20) {
+          vines.push(new Vine(i, p.int(p.random(0, 300))));
+      }
+  };
+}

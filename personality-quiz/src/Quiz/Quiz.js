@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ReactP5Wrapper } from 'react-p5-wrapper';
-import PlantSketch from '../components/PlantSketch';
 
+import PlantSketch from '../components/PlantSketch';
 import QuizBank from '../components/QuizBank';
 
 import './Quiz.css';
