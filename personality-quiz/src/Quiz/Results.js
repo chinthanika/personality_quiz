@@ -7,6 +7,29 @@ import PersonalityBank from "../components/PersonalityBank";
 import "./Results.css";
 import PlantSketch from "../components/PlantSketch";
 
+const ports = await navigator.serial.getPorts();
+const port = ports[0];
+let writer;
+let connected = false;
+
+try{
+    await port.open({baudRate:9600});
+    console.log("Connected to Arduino");
+    connected = true;
+    writer = port.writable.getWriter();
+}
+catch{
+    window.location.reload();
+}
+
+
+async function writeData(msg){
+    const encoder = new TextEncoder();
+    const data = encoder.encode(msg);
+    await writer.write(data);
+    console.log("Wrote Data")
+}
+
 function Results() {
     var personality = {};
 
@@ -18,6 +41,9 @@ function Results() {
             personality = PersonalityBank[personalityIndex];
         }
     }
+
+    let msg = personality.type + '\n';
+    writeData(msg);
 
     return (
         <div className="resultsContainer">
