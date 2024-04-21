@@ -7,10 +7,14 @@ import PersonalityBank from "../components/PersonalityBank";
 import "./Results.css";
 import PlantSketch from "../components/PlantSketch";
 
-const ports = await navigator.serial.getPorts();
-const port = ports[0];
+
+let port;
 let writer;
-let connected = false;
+let connected;
+
+const ports = await navigator.serial.getPorts();
+port = ports[0];
+connected = false;
 
 try{
     await port.open({baudRate:9600});
@@ -19,15 +23,14 @@ try{
     writer = port.writable.getWriter();
 }
 catch{
-    window.location.reload();
+    alert("Could not Connect! Reload Page")
 }
-
 
 async function writeData(msg){
     const encoder = new TextEncoder();
     const data = encoder.encode(msg);
     await writer.write(data);
-    console.log("Wrote Data")
+    console.log("Wrote Data");
 }
 
 function Results() {
